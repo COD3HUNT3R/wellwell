@@ -54,7 +54,7 @@ jobs:
           mkdir -p "$HOME/.vnc"
           chmod go-rwx "$HOME/.vnc"
           ls -lsh $HOME
-          vncpasswd -f <<< "pastamangopizza" >"$HOME/.vnc/passwd"
+          vncpasswd -f <<< "pastaman" >"$HOME/.vnc/passwd"
           cat $HOME/.vnc/passwd
           vncserver
           ss -tulnp

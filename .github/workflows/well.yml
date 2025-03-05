@@ -1,0 +1,49 @@
+name: wellwell
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    runs-on: ubuntu-latest
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          remove-dotnet: 'true'
+          remove-android: 'true'
+          remove-haskell: 'true'
+          remove-codeql: 'true'
+          remove-docker-images: 'true'
+
+      - name: Reclaiming disk space on / by disabling swap partition
+        run: |
+          sudo swapoff -av
+          sudo rm -f /swapfile
+
+      - name: "remove not needed items"
+        run: |
+          sudo rm -rf /usr/local/.ghcup \
+            /usr/share/dotnet \
+            /usr/share/swift \
+            /usr/local/share/powershell \
+            /usr/local/lib/android \
+            /opt/ghc \
+            /opt/hostedtoolcache/CodeQL \
+            /imagegeneration \
+            "$AGENT_TOOLSDIRECTORY"
+          sudo docker image prune --all --force
+          sudo docker builder prune -a
+
+      - name: Install items
+        run: |
+          sudo apt install xserver-xorg-core \
+            tigervnc-standalone-server \
+            tigervnc-common tigervnc-xorg-extension \
+            ubuntu-desktop gnome-panel gnome-settings-daemon \
+            metacity nautilus gnome-terminal

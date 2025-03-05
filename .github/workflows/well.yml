@@ -42,8 +42,4 @@ jobs:
 
       - name: Install items
         run: |
-          sudo apt install xserver-xorg-core \
-            tigervnc-standalone-server \
-            tigervnc-common tigervnc-xorg-extension \
-            ubuntu-desktop gnome-panel gnome-settings-daemon \
-            metacity nautilus gnome-terminal
+          sudo apt install xfce4 xfce4-goodies tightvncserver
